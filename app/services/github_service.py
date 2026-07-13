@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from fastapi import HTTPException
 from app.models.github import GitHubUser, GitHubRepos
 from app.utils.stats import get_user_stats
+from app.utils.sorting import sort_top_repos
 import httpx
 
 
@@ -60,3 +61,16 @@ def get_stats(username:str):
     data=response.json()
 
     return get_user_stats(data)
+
+def get_top_repos(username:str):
+    response=httpx.get(f"https://api.github.com/users/{username}/repos")
+
+    if response.status_code !=200:
+        raise HTTPException(
+            status_code=404,
+            detail="Github user not Found"
+        )
+    
+    data=response.json()
+
+    return sort_top_repos(data)

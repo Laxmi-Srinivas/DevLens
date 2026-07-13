@@ -22,3 +22,8 @@ class GitHubStats(BaseModel):
     total_forks: int
     languages: dict[str, int]
     most_starred_repo: str
+
+class TopRepos(BaseModel):
+    name:str
+    stars:int
+    language:str | None
