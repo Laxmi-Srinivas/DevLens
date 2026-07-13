@@ -3,10 +3,11 @@ from fastapi import HTTPException
 from app.models.github import GitHubUser, GitHubRepos
 from app.utils.stats import get_user_stats
 from app.utils.sorting import sort_top_repos
+from app.utils.insights import cal_insights
 import httpx
 
 
-def get_user(username:str):
+def fetch_user(username:str):
     response=httpx.get(f"https://api.github.com/users/{username}")
     
     if response.status_code !=200:
@@ -16,6 +17,26 @@ def get_user(username:str):
         )
 
     data=response.json()
+
+    return data    
+
+def fetch_repos(username:str):
+    response=httpx.get(f"https://api.github.com/users/{username}/repos")
+    
+    if response.status_code !=200:
+        raise HTTPException(
+            status_code=404,
+            detail="Github user not found"
+        )
+
+    data=response.json()
+
+    return data     
+
+def get_user(username:str):
+
+    data=fetch_user(username)
+
     return GitHubUser(
         username=data.get("login"),
         name=data.get("name"),
@@ -28,15 +49,8 @@ def get_user(username:str):
     )
 
 def get_user_repos(username:str):
-    response=httpx.get(f"https://api.github.com/users/{username}/repos")
 
-    if response.status_code !=200:
-        raise HTTPException(
-            status_code=404,
-            detail="Github user Not Found"
-        )
-    
-    data=response.json()
+    data=fetch_repos(username)
 
     return [
         GitHubRepos(
@@ -50,27 +64,10 @@ def get_user_repos(username:str):
 
 
 def get_stats(username:str):
-    response=httpx.get(f"https://api.github.com/users/{username}/repos")
-
-    if response.status_code !=200:
-        raise HTTPException(
-            status_code=404,
-            detail="Github user Not Found"
-        )
-    
-    data=response.json()
-
-    return get_user_stats(data)
+    return get_user_stats(fetch_repos(username))
 
 def get_top_repos(username:str):
-    response=httpx.get(f"https://api.github.com/users/{username}/repos")
+    return sort_top_repos(fetch_repos(username))
 
-    if response.status_code !=200:
-        raise HTTPException(
-            status_code=404,
-            detail="Github user not Found"
-        )
-    
-    data=response.json()
-
-    return sort_top_repos(data)
+def get_insights(username:str):
+    return cal_insights(fetch_repos(username))
