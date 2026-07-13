@@ -27,3 +27,11 @@ class TopRepos(BaseModel):
     name:str
     stars:int
     language:str | None
+
+class Insights(BaseModel):
+    most_used_language:str
+    language_percentages:dict[str,float]
+    average_stars:float
+    average_forks:float
+    most_forked_repo:str
+    largest_repo:str
