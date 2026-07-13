@@ -1,5 +1,14 @@
-def main():
-    print('Welcome to DevLens')
+from fastapi import FastAPI
+from app.routers import health
+from app.routers import github
+app=FastAPI()
 
-if __name__=="__main__":
-    main()
+@app.get("/")
+def home():
+    return {"message":"Welcome to DevLens"}
+
+app.include_router(health.router)
+
+app.include_router(github.router)
+
+
