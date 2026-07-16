@@ -15,6 +15,10 @@ class GitHubRepos(BaseModel):
     language:str | None
     stars:int
     forks:int
+    description: str | None
+    homepage: str | None
+    archived: bool
+    size: int
 
 class GitHubStats(BaseModel):
     total_repositories: int
@@ -35,3 +39,17 @@ class Insights(BaseModel):
     average_forks:float
     most_forked_repo:str
     largest_repo:str
+
+class AnalysisResponse(BaseModel):
+    total_score: int
+    metrics: dict[str, int]
+    recommendations: list[str]
+
+class RepositoryAnalysis(BaseModel):
+    average_stars: float
+    average_forks: float
+    repositories_with_description: int
+    repositories_with_homepage: int
+    archived_repositories: int
+    empty_repositories: int
+    repository_quality_score: int

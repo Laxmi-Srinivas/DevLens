@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from app.services import github_service
-from app.models.github import GitHubUser, GitHubRepos, GitHubStats,TopRepos,Insights
+from app.models.github import GitHubUser, GitHubRepos, GitHubStats,TopRepos,Insights,AnalysisResponse,RepositoryAnalysis
 
 router=APIRouter()
 
@@ -23,3 +23,11 @@ def get_top_repos(username:str):
 @router.get("/github/{username}/insights", response_model=Insights)
 def get_insights(username:str):
     return github_service.get_insights(username)
+
+@router.get("/github/{username}/analysis",response_model=AnalysisResponse)
+def get_user_analysis(username:str):
+    return github_service.get_user_analysis(username)
+
+@router.get("/github/{username}/repository-analysis",response_model=RepositoryAnalysis)
+def get_user_repos_analysis(username:str):
+    return github_service.get
