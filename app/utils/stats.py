@@ -9,7 +9,7 @@ def get_user_stats(repos:list):
     max_stars=0
     for repo in repos:
         language=repo.get("language") or "Unknown"
-        stars=repo.get("stargazers_count")
+        stars=repo.get("stargazers_count",0)
         if language not in stats["languages"]:
             stats["languages"][language]=0
         stats["languages"][language]+=1
@@ -17,7 +17,7 @@ def get_user_stats(repos:list):
             stats["most_starred_repo"]=repo.get("name")
             max_stars=stars
         stats["total_stars"]+=stars
-        stats["total_forks"]+=repo.get("forks_count")
+        stats["total_forks"]+=repo.get("forks_count",0)
         
         
     return stats

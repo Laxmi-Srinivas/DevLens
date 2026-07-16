@@ -1,7 +1,7 @@
 from app.utils.stats import get_user_stats
-def cal_insights(repos:list):
+def calculate_insights(repos:list):
     insights={
-        "most_used_language":"",
+        "most_used_language":"None",
         "language_percentages":{},
         "average_stars":0,
         "average_forks":0,
@@ -9,6 +9,8 @@ def cal_insights(repos:list):
         "largest_repo":""
     }
     stats=get_user_stats(repos)
+    if stats["total_repositories"]==0:
+        return insights
     insights["most_used_language"]=max(stats["languages"],key=stats["languages"].get)
 
     for key,value in stats["languages"].items():
