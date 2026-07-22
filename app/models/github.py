@@ -42,7 +42,13 @@ class Insights(BaseModel):
 
 class AnalysisResponse(BaseModel):
     total_score: int
+    grade: str
+    developer_level:str
+    strengths:list[str]
+    areas_for_improvement:list[str]
     metrics: dict[str, int]
+    repo_quality_score:int
+    profile_completeness:int
     recommendations: list[str]
 
 class RepositoryAnalysis(BaseModel):
