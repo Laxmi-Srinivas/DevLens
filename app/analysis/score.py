@@ -18,5 +18,6 @@ def calculate_profile_score(user, repos):
     profile_completeness=calculate_profile_completeness(user)
     final_score["repo_quality_score"]=repo_quality_score
     final_score["profile_completeness"]=profile_completeness
-    final_score["total_score"]=int((sum(final_score["metrics"].values())*0.60)+(repo_quality_score*0.25)+(profile_completeness*0.15))
+    metrics_score = (sum(final_score["metrics"].values()) / 60) * 100
+    final_score["total_score"] = round(metrics_score * 0.60 + repo_quality_score * 0.25 + profile_completeness * 0.15)
     return final_score
