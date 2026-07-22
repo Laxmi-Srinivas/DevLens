@@ -11,7 +11,7 @@ def generate_weaknesses(scores)->list[str]:
         weaknesses.append("Technical focus is limited to a small set of programming languages.")
     if stars_score<20:
         weaknesses.append("Projects have received limited community engagement.")
-    if followers_score<8:
+    if followers_score<2:
         weaknesses.append("Community engagement is currently limited.")
 
     profile_completeness_score=scores["profile_completeness"]
