@@ -5,6 +5,10 @@ from app.utils.sorting import sort_top_repos
 from app.utils.insights import calculate_insights
 from app.analysis.score import calculate_profile_score
 from app.analysis.recommendations import generate_recommendations
+from app.analysis.grading import calculate_grade
+from app.analysis.levels import calculate_developer_level
+from app.analysis.strengths import generate_strengths
+from app.analysis.weaknesses import generate_weaknesses
 import httpx
 
 
@@ -82,11 +86,19 @@ def get_user_analysis(username:str):
     repos=get_user_repos(username)
 
     scores=calculate_profile_score(user,repos)
-
+    grade=calculate_grade(scores["total_score"])
+    developer_level=calculate_developer_level(scores["total_score"])
+    strengths=generate_strengths(scores)
+    weaknesses=generate_weaknesses(scores)
     recommendations=generate_recommendations(user,repos,scores)
-    
     return AnalysisResponse(
         total_score=scores["total_score"],
+        grade=grade,
+        developer_level=developer_level,
+        strengths=strengths,
+        areas_for_improvement=weaknesses,
         metrics=scores["metrics"],
+        repo_quality_score=scores["repo_quality_score"],
+        profile_completeness=scores["profile_completeness"],
         recommendations=recommendations
     )
