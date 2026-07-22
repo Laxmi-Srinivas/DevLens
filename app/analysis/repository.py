@@ -47,7 +47,7 @@ def get_analysis(repos: list[GitHubRepos]):
 
 def calculate_repository_score(report,total_repos):
     description_score=(report["repositories_with_description"]/total_repos)*20
-    homepage_score=(report["repositories_with_homepage"]/total_repos)*10
+    homepage_score=(report["repositories_with_homepage"]/total_repos)*5
     avg_stars=report["average_stars"]
     if avg_stars >= 20:
         average_stars_score=30
@@ -80,15 +80,15 @@ def calculate_repository_score(report,total_repos):
         average_forks_score=0
     archived_repos_score=(report["archived_repositories"]/total_repos)*100
     if archived_repos_score >81:
-        archived_repos_score=-10
+        archived_repos_score=-5
     elif archived_repos_score >61:
-        archived_repos_score=-8
-    elif archived_repos_score>41:
-        archived_repos_score=-6
-    elif archived_repos_score>21:
         archived_repos_score=-4
-    elif archived_repos_score>1:
+    elif archived_repos_score>41:
+        archived_repos_score=-3
+    elif archived_repos_score>21:
         archived_repos_score=-2
+    elif archived_repos_score>1:
+        archived_repos_score=-1
     else:
         archived_repos_score=0
     empty_repos_score=(report["empty_repositories"]/total_repos)*100
