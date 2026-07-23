@@ -61,7 +61,7 @@ def generate_recommendations(scores):
 
     if repository_score <=5:
         recommendations.append("Build additional public projects that demonstrate your skills.")
-    if language_score <15:
+    if language_score <=6:
         recommendations.append("Incorporate a broader mix of frameworks and languages to demonstrate technical versatility.")
     if stars_score<20:
         recommendations.append("Create clear contribution guides and use 'good first issue' labels to invite outside help.")
@@ -69,7 +69,7 @@ def generate_recommendations(scores):
         recommendations.append("Share your project links on social platforms or developer forums to get more people looking at your work.")
 
     profile_completeness_score=scores["profile_completeness"]
-    if profile_completeness_score<80:
+    if profile_completeness_score<=50:
         recommendations.append("Complete your GitHub profile with a professional bio and other profile details.")
 
     repo_quality_score=scores["repo_quality_score"]
