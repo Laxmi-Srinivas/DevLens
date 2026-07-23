@@ -88,7 +88,7 @@ def get_user_analysis(username:str):
     developer_level=calculate_developer_level(scores["total_score"])
     strengths=generate_strengths(scores)
     weaknesses=generate_weaknesses(scores)
-    recommendations=generate_recommendations(user,repos,scores)
+    recommendations=generate_recommendations(scores)
     summary=generate_summary(scores)
     return AnalysisResponse(
         total_score=scores["total_score"],
