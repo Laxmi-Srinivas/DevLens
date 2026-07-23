@@ -34,7 +34,7 @@ def generate_weaknesses(scores)->list[str]:
 
     if repository_score <=5:
         weaknesses.append("Portfolio contains relatively few public repositories.")
-    if language_score <15:
+    if language_score <=6:
         weaknesses.append("Portfolio could showcase a wider variety of technologies.")
     if stars_score<20:
         weaknesses.append("Projects have received limited community engagement.")
@@ -42,7 +42,7 @@ def generate_weaknesses(scores)->list[str]:
         weaknesses.append("Projects have opportunities to gain greater community visibility.")
 
     profile_completeness_score=scores["profile_completeness"]
-    if profile_completeness_score<80:
+    if profile_completeness_score<=50:
         weaknesses.append("GitHub profile could include more professional information.")
 
     repo_quality_score=scores["repo_quality_score"]

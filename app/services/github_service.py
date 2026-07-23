@@ -4,10 +4,9 @@ from app.utils.stats import get_user_stats
 from app.utils.sorting import sort_top_repos
 from app.utils.insights import calculate_insights
 from app.analysis.score import calculate_profile_score
-from app.analysis.recommendations import generate_recommendations
 from app.analysis.grading import calculate_grade
 from app.analysis.levels import calculate_developer_level
-from app.analysis.interpretation import generate_strengths, generate_weaknesses, generate_summary
+from app.analysis.interpretation import generate_strengths, generate_weaknesses, generate_summary, generate_recommendations
 import httpx
 
 
