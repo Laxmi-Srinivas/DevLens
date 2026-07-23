@@ -7,8 +7,7 @@ from app.analysis.score import calculate_profile_score
 from app.analysis.recommendations import generate_recommendations
 from app.analysis.grading import calculate_grade
 from app.analysis.levels import calculate_developer_level
-from app.analysis.strengths import generate_strengths
-from app.analysis.weaknesses import generate_weaknesses
+from app.analysis.interpretation import generate_strengths, generate_weaknesses, generate_summary
 import httpx
 
 
@@ -91,6 +90,7 @@ def get_user_analysis(username:str):
     strengths=generate_strengths(scores)
     weaknesses=generate_weaknesses(scores)
     recommendations=generate_recommendations(user,repos,scores)
+    summary=generate_summary(scores)
     return AnalysisResponse(
         total_score=scores["total_score"],
         grade=grade,
@@ -100,5 +100,6 @@ def get_user_analysis(username:str):
         metrics=scores["metrics"],
         repo_quality_score=scores["repo_quality_score"],
         profile_completeness=scores["profile_completeness"],
-        recommendations=recommendations
+        recommendations=recommendations,
+        summary=summary
     )
