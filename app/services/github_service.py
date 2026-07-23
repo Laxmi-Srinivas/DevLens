@@ -3,10 +3,7 @@ from app.models.github import GitHubUser, GitHubRepos,AnalysisResponse
 from app.utils.stats import get_user_stats
 from app.utils.sorting import sort_top_repos
 from app.utils.insights import calculate_insights
-from app.analysis.score import calculate_profile_score
-from app.analysis.grading import calculate_grade
-from app.analysis.levels import calculate_developer_level
-from app.analysis.interpretation import generate_strengths, generate_weaknesses, generate_summary, generate_recommendations
+from app.services.analysis_service import build_analysis
 import httpx
 
 
@@ -70,35 +67,22 @@ def get_user_repos(username:str):
     ]
 
 
-def get_stats(username:str):
-    return get_user_stats(fetch_repos(username))
+def get_stats(username):
+    repos = get_user_repos(username)
+    return get_user_stats(repos)
 
-def get_top_repos(username:str):
-    return sort_top_repos(fetch_repos(username))
+def get_top_repos(username):
+    repos = get_user_repos(username)
+    return sort_top_repos(repos)
 
-def get_insights(username:str):
-    return calculate_insights(fetch_repos(username))
+def get_insights(username):
+    repos = get_user_repos(username)
+    return calculate_insights(repos)
 
-def get_user_analysis(username:str):
-    user=get_user(username)
-    repos=get_user_repos(username)
 
-    scores=calculate_profile_score(user,repos)
-    grade=calculate_grade(scores["total_score"])
-    developer_level=calculate_developer_level(scores["total_score"])
-    strengths=generate_strengths(scores)
-    weaknesses=generate_weaknesses(scores)
-    recommendations=generate_recommendations(scores)
-    summary=generate_summary(scores)
-    return AnalysisResponse(
-        total_score=scores["total_score"],
-        grade=grade,
-        developer_level=developer_level,
-        strengths=strengths,
-        areas_for_improvement=weaknesses,
-        metrics=scores["metrics"],
-        repo_quality_score=scores["repo_quality_score"],
-        profile_completeness=scores["profile_completeness"],
-        recommendations=recommendations,
-        summary=summary
-    )
+
+def get_user_analysis(username):
+    user = get_user(username)
+    repos = get_user_repos(username)
+
+    return build_analysis(user, repos)

@@ -46,7 +46,7 @@ def generate_weaknesses(scores)->list[str]:
         weaknesses.append("GitHub profile could include more professional information.")
 
     repo_quality_score=scores["repo_quality_score"]
-    if repo_quality_score<80:
+    if repo_quality_score<60:
         weaknesses.append("Some repositories could benefit from improved documentation or maintenance.")
     if not weaknesses:
         weaknesses.append("No significant weaknesses identified.")
@@ -64,7 +64,7 @@ def generate_recommendations(scores):
     if language_score <=6:
         recommendations.append("Incorporate a broader mix of frameworks and languages to demonstrate technical versatility.")
     if stars_score<20:
-        recommendations.append("Create clear contribution guides and use 'good first issue' labels to invite outside help.")
+        recommendations.append("Build projects that solve real problems and share them with the developer community.")
     if followers_score<2:
         recommendations.append("Share your project links on social platforms or developer forums to get more people looking at your work.")
 
@@ -73,7 +73,7 @@ def generate_recommendations(scores):
         recommendations.append("Complete your GitHub profile with a professional bio and other profile details.")
 
     repo_quality_score=scores["repo_quality_score"]
-    if repo_quality_score<80:
+    if repo_quality_score<60:
         recommendations.append("Review your existing project folders to clean up code, update files, and make them easier to navigate.")
     if not recommendations:
         recommendations.append("Keep doing what you are doing—your profile looks great.")
@@ -91,7 +91,7 @@ def generate_summary(scores):
         )
     elif score >= 60:
         return (
-            "This GitHub profile demonstrates a solid foundation with meaningful projects. Improving documentation, profile completeness, and portfolio breadth would strengthen the overall portfolio."
+            "This GitHub profile demonstrates a solid software engineering portfolio with meaningful projects and good development practices. Continued improvements to documentation, profile presentation, and project diversity would further strengthen the portfolio."
         )
     elif score >= 40:
         return (

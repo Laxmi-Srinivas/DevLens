@@ -60,3 +60,11 @@ class RepositoryAnalysis(BaseModel):
     archived_repositories: int
     empty_repositories: int
     repository_quality_score: int
+
+class GitHubReport(BaseModel):
+    user: GitHubUser
+    stats: GitHubStats
+    top_repositories: list[TopRepos]
+    insights: Insights
+    repository_analysis: RepositoryAnalysis
+    analysis: AnalysisResponse
