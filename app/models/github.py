@@ -50,6 +50,7 @@ class AnalysisResponse(BaseModel):
     repo_quality_score:int
     profile_completeness:int
     recommendations: list[str]
+    summary: str
 
 class RepositoryAnalysis(BaseModel):
     average_stars: float
